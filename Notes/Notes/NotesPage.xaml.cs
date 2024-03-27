@@ -12,7 +12,11 @@ public partial class NotesPage : ContentPage
     public NotesPage()
 	{
         InitializeComponent();
-        TextEditor.Text = File.ReadAllText(path);
+        if (File.Exists(path))
+        {
+            TextEditor.Text = File.ReadAllText(path);
+            DisplayAlert("Sucesso", "Arquivo criado com sucesso", "OK");
+        }
     }
 
     private void SaveButton_Clicked(object sender, EventArgs e)
@@ -26,6 +30,11 @@ public partial class NotesPage : ContentPage
 
     private void DeleteButton_Clicked(object sender, EventArgs e)
     {
-        TextEditor.Text = "";
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+            TextEditor.Text = "";
+            DisplayAlert("Sucesso", "Arquivo deletado com sucesso", "OK");
+        }
     }
 }
